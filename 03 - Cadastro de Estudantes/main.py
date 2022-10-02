@@ -2,7 +2,8 @@ import os
 
 
 class Aluno:
-    """ Classe Aluno """
+    """Classe Aluno"""
+
     def __init__(self, nome: str, curso: str):
         """Inicialização
 
@@ -12,6 +13,7 @@ class Aluno:
         """
         self.nome = nome
         self.curso = curso
+
 
 # Variáveis globais
 lista_estados = ["RS", "SC", "SP", "RJ", "MG"]
@@ -24,19 +26,19 @@ menu = {
     1: "Catalogar Aluno",
     2: "Imprimir Alunos por Estado",
     3: "Imprimir Alunos por Curso",
-    4: "Localizar um Aluno por nome"
+    4: "Localizar um Aluno por nome",
 }
 
 
 def imprimeMenu():
-    """ Imprime o menu do programa """
+    """Imprime o menu do programa"""
     for key in menu.keys():
         print(f"{key} - {menu[key]}")
 
 
 def catalogarAluno():
     """Cadastra um novo aluno"""
-    
+
     limparTela()
     print("Catalogar Aluno\n")
 
@@ -55,7 +57,7 @@ def catalogarAluno():
 
     # Instancia um novo aluno
     novoAluno = Aluno(nome_aluno, curso_selecionado)
-    
+
     # Adiciona o aluno na lista de alunos do estado
     dic_estudantes[estado_selecionado].append(novoAluno)
 
@@ -70,7 +72,7 @@ def catalogarAluno():
 
 def imprimirAlunosEstado():
     """Imprime a lista de Alunos por Estado"""
-    
+
     limparTela()
     print("Imprimir Alunos por Estado\n")
 
@@ -130,7 +132,7 @@ def imprimirAlunosCurso():
         print(f"{'-'*10:<10} | {'-'*10:<10}")
         print(f"{'Nome':<10} | {'Curso':<10}")
         print(f"{'-'*10:<10} | {'-'*10:<10}")
-        
+
         # Alunos
         for aluno in alunos_encontrados:
             print(f"{aluno.nome:<10} | {aluno.curso:<10}")
@@ -140,13 +142,13 @@ def imprimirAlunosCurso():
 
 def localizarAluno():
     """Localiza um aluno pelo Nome"""
-    
+
     limparTela()
     print("Localizar Aluno\n")
 
     # Insere o nome do aluno
     nome_aluno = inputAluno()
-    
+
     # Variável para identificar se encontrou aluno
     encontrou = False
 
@@ -154,7 +156,7 @@ def localizarAluno():
     # com o nome informado
     for estado in dic_estudantes:
         for aluno in dic_estudantes[estado]:
-            
+
             if str.lower(aluno.nome) == str.lower(nome_aluno):
                 encontrou = True
 
@@ -168,7 +170,7 @@ def localizarAluno():
 
                 teclarParaContinuar()
 
-    # Se não encontrou, imprime mensagem 
+    # Se não encontrou, imprime mensagem
     if not encontrou:
         print("\nAluno não encontrado.")
         teclarParaContinuar()
@@ -190,24 +192,24 @@ def inputAluno():
     while True:
         try:
             nome_aluno = input("Digite o nome do aluno: ")
-            
+
             if nome_aluno.strip() == "":
                 print("Nome não pode ser vazio.")
             else:
                 return nome_aluno
-            
+
         except ValueError:
             print("Digite um nome válido.")
 
 
 def selecionarEstado():
     """Solicita e retorna o Estado selecionado"""
-    
+
     print("\nEscolha um Estado:")
-    
+
     # Imprime as opções
     print("0 - Sair")
-    for i in range(0, len(lista_estados)):
+    for i in range(len(lista_estados)):
         print(f"{i+1} - {lista_estados[i]}")
 
     while True:
@@ -219,8 +221,7 @@ def selecionarEstado():
             elif escolha > len(lista_estados) or escolha < 0:
                 print("Estado inválido.")
             else:
-                estado_selecionado = lista_estados[escolha-1]
-                return estado_selecionado
+                return lista_estados[escolha - 1]
 
         except ValueError:
             print("Estado inválido.")
@@ -228,12 +229,12 @@ def selecionarEstado():
 
 def selecionarCurso():
     """Solicita e retorna o Curso selecionado"""
-    
+
     print("\nEscolha um Curso:")
-    
+
     # Imprime as opções
-    print("0 - Sair")    
-    for i in range(0, len(lista_cursos)):
+    print("0 - Sair")
+    for i in range(len(lista_cursos)):
         print(f"{i+1} - {lista_cursos[i]}")
 
     while True:
@@ -245,32 +246,36 @@ def selecionarCurso():
             elif escolha > len(lista_cursos) or escolha < 0:
                 print("Curso inválido.")
             else:
-                curso_selecionado = lista_cursos[escolha-1]
-                return curso_selecionado
+                return lista_cursos[escolha - 1]
 
         except ValueError:
             print("Curso inválido.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     while True:
         limparTela()
         imprimeMenu()
 
         while True:
-            escolha = ''
+            escolha = ""
             try:
                 escolha = int(input("Escolha: "))
 
-                if   escolha == 0: exit()
-                elif escolha == 1: catalogarAluno()
-                elif escolha == 2: imprimirAlunosEstado()
-                elif escolha == 3: imprimirAlunosCurso()
-                elif escolha == 4: localizarAluno()
+                if escolha == 0:
+                    exit()
+                elif escolha == 1:
+                    catalogarAluno()
+                elif escolha == 2:
+                    imprimirAlunosEstado()
+                elif escolha == 3:
+                    imprimirAlunosCurso()
+                elif escolha == 4:
+                    localizarAluno()
                 else:
                     print("Opção inválida.")
-                    
+
                 break
             except ValueError:
                 print("Opção inválida.")
